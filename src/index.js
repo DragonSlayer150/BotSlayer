@@ -1,7 +1,7 @@
 //imports dependencies
 const dotenv = require('dotenv');
 const fs = require('node:fs');
-const path = require('node:path ');
+const path = require('node:path');
 const { GatewayIntentBits, Client, Events, Collection } = require('discord.js');
 
 dotenv.config();
@@ -24,7 +24,7 @@ const client = new Client({
 
 client.commands = new Collection();
 
-//Dynamically adds every command to the client.commands collection
+//Adds commands to client.commands
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -43,12 +43,20 @@ for (const folder of commandFolders) {
 	}
 }
 
-//Starts the Event handler, which allows all interactions to be registered and used
 
-client.once(Events.ClientReady, readyClient => {
-    console.log(`Ready! Logged in as ${readyClient.user.tag}`)
-});
+//Adds handles events
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
-    
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+
 
 client.login(TOKEN);
