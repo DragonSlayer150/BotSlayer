@@ -1,8 +1,4 @@
 const { Events, GuildMemberRoleManager, GuildManager } = require('discord.js');
-require('dotenv').config();
-
-const GUILD_ID = process.env.GUILD_ID;
-
 
 module.exports = {
     name: Events.GuildMemberAdd,
