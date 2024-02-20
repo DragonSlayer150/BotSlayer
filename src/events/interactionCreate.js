@@ -4,6 +4,7 @@ module.exports = {
   async execute(interaction) {
     let colours = ["red", "blue"];
 
+    //Function removeRoles() removes all oft the colour roles on the member the interaction was used by
     function removeRoles() {
       for (let i = 0; i < colours.length; i++) {
         let colour = colours[i];
@@ -13,6 +14,7 @@ module.exports = {
         interaction.member.roles.remove(colourRole);
       }
     }
+    //Checks if the interaction was a slash command
     if (interaction.isChatInputCommand()) {
       const command = interaction.client.commands.get(interaction.commandName);
 
@@ -39,38 +41,41 @@ module.exports = {
           });
         }
       }
+      //Checks if the interaction was a button
     } else if (interaction.isButton()) {
       const button = interaction.customId;
 
       try {
-        if (button == "colour1") {
-          removeRoles();
-          const colourRole = interaction.guild.roles.cache.find(
-            (role) => role.name == "red"
-          );
-          await interaction.member.roles.add(colourRole);
+        switch (button) {
+          case "colour1":
+            removeRoles();
+            interaction.member.roles.add(
+              interaction.guild.roles.cache.find((role) => role.name == "red")
+            );
 
-          await interaction.reply({
-            content: "Your colour has been changed",
-            ephemeral: true,
-          });
-        } else if (button == "colour2") {
-          removeRoles();
-          const colourRole = interaction.guild.roles.cache.find(
-            (role) => role.name == "blue"
-          );
-          await interaction.member.roles.add(colourRole);
+            await nteraction.reply({
+              content: "Your colour has been changed",
+              ephemeral: true,
+            });
+            break;
+          case "colour2":
+            removeRoles();
+            interaction.member.roles.add(
+              interaction.guild.roles.cache.find((role) => role.name == "blue")
+            );
 
-          await interaction.reply({
-            content: "Your colour has been changed",
-            ephemeral: true,
-          });
-        } else if (button == "clear") {
-          removeRoles();
-          await interaction.reply({
-            content: "Your colours have been cleared",
-            ephemeral: true,
-          });
+            await interaction.reply({
+              content: "Your colour has been changed",
+              ephemeral: true,
+            });
+            break;
+          case "clear":
+            removeRoles();
+            await interaction.reply({
+              content: "Your colours have been cleared",
+              ephemeral: true,
+            });
+            break;
         }
       } catch (error) {
         console.error(error);
