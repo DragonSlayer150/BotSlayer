@@ -1,1 +1,1 @@
-run "node index.js" in the terminal to start it up, thats it
+Dont ask me how it works because I dont know either 👍
