@@ -4,7 +4,7 @@ module.exports = {
   async execute(interaction) {
     let colours = ["red", "blue"];
 
-    //Function removeRoles() removes all oft the colour roles on the member the interaction was used by
+    //Function removeRoles() removes all of the colour roles on the member the interaction was used by
     function removeRoles() {
       for (let i = 0; i < colours.length; i++) {
         let colour = colours[i];
@@ -53,7 +53,7 @@ module.exports = {
               interaction.guild.roles.cache.find((role) => role.name == "red")
             );
 
-            await nteraction.reply({
+            await interaction.reply({
               content: "Your colour has been changed",
               ephemeral: true,
             });

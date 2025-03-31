@@ -1,13 +1,13 @@
 //imports dependencies
-const dotenv = require("dotenv");
+const { TOKEN } = require('./config.json');
 const fs = require("node:fs");
 const path = require("node:path");
 const { GatewayIntentBits, Client, Collection } = require("discord.js");
 
-dotenv.config();
+
 
 //allows index.js to access the Bot Token from .env
-const TOKEN = process.env.TOKEN;
+
 
 //Creates a new client (the bot) with all of the intents it needs
 const client = new Client({
